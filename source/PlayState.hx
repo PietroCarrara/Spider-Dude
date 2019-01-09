@@ -1,29 +1,44 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxState;
-import flixel.FlxSprite;
+import flixel.FlxCamera.FlxCameraFollowStyle;
+import flixel.group.FlxGroup;
 import entities.Character;
+import entities.Platform;
 
 class PlayState extends FlxState {
 	var char:Character;
+	var platforms:FlxTypedGroup<Platform>;
 
-	override public function create():Void {
+	public static var camTarget(default, null):FlxObject;
+
+	override function create():Void {
 		super.create();
 
 		char = new Character();
-		this.add(char);
-		this.camera.follow(char);
+		add(char);
 
-		var sqr = new FlxSprite();
-		sqr.x = 200;
-		sqr.makeGraphic(200, 200);
-		this.add(sqr);
+		camTarget = new FlxObject();
+		add(camTarget);
+		camera.follow(camTarget, FlxCameraFollowStyle.LOCKON, 0.1);
 
-		this.camera.follow(sqr);
+		platforms = new FlxTypedGroup<Platform>();
+		platforms.add(new Platform(0, 200, 20, 20));
+
+		add(platforms);
+
+		add(new entities.JumpIndicator(char, 70));
 	}
 
-	override public function update(elapsed:Float):Void {
-		super.update(elapsed);
+	override function update(dt:Float):Void {
+		super.update(dt);
+
+		FlxG.collide(char, platforms, snap);
+	}
+
+	function snap(char:Character, platform:Platform) {
+		char.snap(platform);
 	}
 }
