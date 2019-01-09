@@ -32,8 +32,8 @@ class JumpIndicator extends FlxSprite {
 
 		this.angle = FlxAngle.asDegrees(angle) + 90;
 
-		this.x = player.getCenter().x;
-		this.y = player.getCenter().y;
+		this.x = player.getCenter().x - this.width / 2;
+		this.y = player.getCenter().y - this.height / 2;
 
 		this.x += Math.cos(angle) * distance * PlayerRocket.force;
 		this.y += Math.sin(angle) * distance * PlayerRocket.force;

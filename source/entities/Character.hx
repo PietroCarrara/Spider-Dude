@@ -41,15 +41,14 @@ class Character extends FlxSprite {
 	public function snap(p:Platform) {
 
 		// Doesn't matter what platform you land,
-		// you should be able to jump
+		// you should be able to jump and stop moving
 		canJump = true;
 		acceleration.y = 0;
+		this.velocity.set();
 
 		if (p == lastPlatform) {
 			return;
 		}
-
-		trace("Changing platform!");
 
 		lastPlatform = p;
 
