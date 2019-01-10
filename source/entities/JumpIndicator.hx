@@ -20,15 +20,16 @@ class JumpIndicator extends FlxSprite {
 		super.update(dt);
 
 		var t = TouchInput.getTouch();
+		var angle = PlayerRocket.angle;
 
-		if (t == null) {
+		if (t == null || angle <= 0 || !player.canJump) {
 			this.visible = false;
 			return;
 		}
 
 		// Get the angle to the player's finger,
 		// but put the indicator on the other end (+180º)
-		var angle = PlayerRocket.angle + Math.PI;
+		angle += Math.PI;
 
 		this.angle = FlxAngle.asDegrees(angle) + 90;
 

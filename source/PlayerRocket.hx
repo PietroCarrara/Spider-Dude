@@ -13,14 +13,12 @@ class PlayerRocket {
 		var touch = TouchInput.getTouch();
 		if (touch != null) {
 			// angleBetween returns an angle with 0 pointing up, -90 fixes that
-			var angle = char.getCenter().angleBetween(touch.position) - 90;
+			angle = char.getCenter().angleBetween(touch.position) - 90;
 			angle = FlxAngle.wrapAngle(angle);
 			angle = FlxAngle.asRadians(angle);
 
 			// The touch was below the character, so its ok
 			if (angle > 0) {
-				PlayerRocket.angle = angle;
-
 				force = flixel.math.FlxMath.distanceToPoint(char, touch.position);
 
 				// Your force will be at its maximum when your finger slides to the border of the screen

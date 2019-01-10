@@ -27,6 +27,13 @@ class Character extends FlxSprite {
 	override function update(dt:Float) {
 		super.update(dt);
 
+		// Bounce on the walls
+		if (this.x <= -FlxG.width / 2) {
+			this.velocity.x = Math.abs(this.velocity.x);
+		} else if (this.x + this.width >= FlxG.width / 2) {
+			this.velocity.x = -Math.abs(this.velocity.x);
+		}
+
 		if (canJump) { // Only jump when on a platform
 			PlayerRocket.update(this);
 		} else { // If we're not on a platform, apply gravity
