@@ -29,6 +29,7 @@ class PlayState extends FlxState {
 		camera.focusOn(camTarget.getPosition());
 		camera.follow(camTarget, FlxCameraFollowStyle.LOCKON, 0.1);
 
+		Platform.clearHighest();
 		platforms = new FlxGroup();
 		platforms.add(new Platform(0, 200, 20, 20));
 		add(platforms);
@@ -46,9 +47,11 @@ class PlayState extends FlxState {
 	function snap(char:Character, platform:Platform) {
 		char.snap(platform);
 
-		var newPlat = new Platform(random.float(-FlxG.width / 2, FlxG.width / 2), camTarget.y, 50, 20);
-		platforms.add(newPlat);
-
 		FlxG.worldBounds.set(camTarget.x - FlxG.width / 2, camTarget.y - FlxG.height / 2, FlxG.width, FlxG.height);
+
+		if (platform.isHighest) {
+			var newPlat = new Platform(random.float(-FlxG.width / 2, FlxG.width / 2), camTarget.y, 50, 20);
+			platforms.add(newPlat);
+		}
 	}
 }
