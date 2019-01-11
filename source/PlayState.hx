@@ -21,6 +21,8 @@ class PlayState extends FlxState {
 	override function create():Void {
 		super.create();
 
+		FlxG.worldBounds.set();
+
 		char = new Character();
 		add(char);
 
@@ -41,15 +43,15 @@ class PlayState extends FlxState {
 		super.update(dt);
 
 		// Collide with platforms
-		FlxG.collide(char, platforms, snap);
+		FlxG.overlap(char, platforms, snap, FlxObject.separate);
 	}
 
 	function snap(char:Character, platform:Platform) {
-		char.snap(platform);
+		var success = char.snap(platform);
 
 		FlxG.worldBounds.set(camTarget.x - FlxG.width / 2, camTarget.y - FlxG.height / 2, FlxG.width, FlxG.height);
 
-		if (platform.isHighest) {
+		if (success && platform.isHighest) {
 			var newPlat = new Platform(random.float(-FlxG.width / 2, FlxG.width / 2), camTarget.y, 50, 20);
 			platforms.add(newPlat);
 		}
